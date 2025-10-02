@@ -3,3 +3,6 @@
 ################################################################################
 
 /Serial-image-converter
+/Serial-monitor-pc/.vs
+/Serial-monitor-pc/bin/Debug/net9.0-windows
+/Serial-monitor-pc/obj
