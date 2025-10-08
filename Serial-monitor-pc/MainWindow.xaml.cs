@@ -22,6 +22,10 @@ namespace Serial_monitor_pc
             InitializeComponent();
         }
         SerialPort serialPort = new SerialPort();
+        RecievedData data = new RecievedData();
+        PlotterPoints plotterGrafiek = new PlotterPoints();
+
+        bool plotterDefined = false;
 
         private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
@@ -141,10 +145,13 @@ namespace Serial_monitor_pc
             try
             {
                 string dump = serialPort.ReadExisting();
+                data = decodeData(dump);
                 Dispatcher.Invoke(() =>
                 {
                     dataTextBox.AppendText(dump + Environment.NewLine);
                     dataTextBox.ScrollToEnd();
+                    potentiometerBar.Value = (int)Math.Round(data.potValue / 1023.0 * 100);
+                    plotterGrafiek.AddPotValue(data.potValue);
                 });
             }
             catch (Exception ex)
@@ -158,7 +165,44 @@ namespace Serial_monitor_pc
 
         private void plotterButton_Click(object sender, RoutedEventArgs e)
         {
+            Plotter plotter = new Plotter(plotterGrafiek);
+            plotter.Show();
+        }
 
+        static RecievedData decodeData(string data)
+        {
+            var recievedData = new RecievedData();
+
+            data = data.Trim().TrimEnd('.');
+
+            string[] pairs = data.Split(',');
+
+            foreach (var pair in pairs)
+            {
+                string[] parts = pair.Split(':');
+                if (parts.Length != 2) continue;
+
+                string key = parts[0].Trim().ToLower();
+                int value = int.Parse(parts[1].Trim());
+
+                switch (key)
+                {
+                    case "pot":
+                        recievedData.potValue = value;
+                        break;
+                    case "eindeloop":
+                        recievedData.eindeloop = Convert.ToBoolean(value); ;
+                        break;
+                    case "knop1":
+                        recievedData.knop1 = Convert.ToBoolean(value); 
+                        break;
+                    case "knop 2": 
+                        recievedData.knop2 = Convert.ToBoolean(value); 
+                        break;
+                }
+            }
+
+            return recievedData;
         }
     }
 }
