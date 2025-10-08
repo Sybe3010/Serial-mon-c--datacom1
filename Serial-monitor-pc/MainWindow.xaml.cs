@@ -1,14 +1,16 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.IO.Ports;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.IO.Ports;
 
 namespace Serial_monitor_pc
 {
@@ -146,12 +148,13 @@ namespace Serial_monitor_pc
             {
                 string dump = serialPort.ReadExisting();
                 data = decodeData(dump);
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     dataTextBox.AppendText(dump + Environment.NewLine);
                     dataTextBox.ScrollToEnd();
-                    potentiometerBar.Value = (int)Math.Round(data.potValue / 1023.0 * 100);
                     plotterGrafiek.AddPotValue(data.potValue);
+                    SetProgress(data.potValue);
+
                 });
             }
             catch (Exception ex)
@@ -204,5 +207,28 @@ namespace Serial_monitor_pc
 
             return recievedData;
         }
+
+        private const double TotalLength = 314; // halve cirkel lengte (radius 100)
+
+        private void SetProgress(int waarde)
+        {
+            int potProcent = (int)((waarde / 1023.0) * 100);
+
+            // Bereken offset
+            double offset = TotalLength - (potProcent / 100.0 * TotalLength);
+
+            // Direct instellen
+            potProgress.StrokeDashOffset = offset;
+
+
+            DoubleAnimation anim = new DoubleAnimation
+            {
+                To = offset,
+                Duration = TimeSpan.FromMilliseconds(50)
+            };
+            potProgress.BeginAnimation(Path.StrokeDashOffsetProperty, anim);
+
+        }
     }
 }
+

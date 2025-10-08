@@ -11,12 +11,21 @@ namespace Serial_monitor_pc
     public class PlotterPoints
     {
         private LineSeries potSeries;
+        private LineSeries battSeries;
 
         public PlotterPoints() {
             this.MyModel = new PlotModel { Title = "Waardes" };
+            this.MyModel.Axes.Add(new OxyPlot.Axes.LinearAxis
+            {
+                Position = OxyPlot.Axes.AxisPosition.Left,
+                Minimum = 0,
+                Maximum = 1023,
+                Title = "Value"
+            });
             potSeries = new LineSeries
             {
                 Title = "Potentiometer",
+                Color = OxyColors.Blue,
             };
             MyModel.Series.Add(potSeries);
         }
