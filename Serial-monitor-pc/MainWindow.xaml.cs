@@ -153,8 +153,7 @@ namespace Serial_monitor_pc
                     dataTextBox.AppendText(dump + Environment.NewLine);
                     dataTextBox.ScrollToEnd();
                     plotterGrafiek.AddPotValue(data.potValue);
-                    SetProgress(data.potValue);
-
+                    potProgress.Value = data.potValue;
                 });
             }
             catch (Exception ex)
@@ -208,26 +207,11 @@ namespace Serial_monitor_pc
             return recievedData;
         }
 
-        private const double TotalLength = 314; // halve cirkel lengte (radius 100)
 
-        private void SetProgress(int waarde)
+        private void TFT_display_Click(object sender, RoutedEventArgs e)
         {
-            int potProcent = (int)((waarde / 1023.0) * 100);
-
-            // Bereken offset
-            double offset = TotalLength - (potProcent / 100.0 * TotalLength);
-
-            // Direct instellen
-            potProgress.StrokeDashOffset = offset;
-
-
-            DoubleAnimation anim = new DoubleAnimation
-            {
-                To = offset,
-                Duration = TimeSpan.FromMilliseconds(50)
-            };
-            potProgress.BeginAnimation(Path.StrokeDashOffsetProperty, anim);
-
+            TFT_controls tftControls = new TFT_controls(serialPort);
+            tftControls.Show();
         }
     }
 }

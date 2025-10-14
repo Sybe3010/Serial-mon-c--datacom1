@@ -29,7 +29,9 @@ namespace Serial_monitor_pc
 
         private void Plotter_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = true;      // Voorkom dat het venster sluit
+            //e.Cancel = true;      // Voorkom dat het venster sluit
+            DataContext = null; // Verbreek de binding met het DataContext
+
         }
     }
 }

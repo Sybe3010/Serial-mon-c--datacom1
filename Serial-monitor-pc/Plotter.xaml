@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:Serial_monitor_pc"
-        Title="Example 2 (WPF)" Height="350" Width="525">
+        Title="De super plotter" Height="350" Width="525">
     <Window.DataContext>
         <local:PlotterPoints/>
     </Window.DataContext>
@@ -18,4 +18,4 @@
             <CheckBox Content="Batterij" Margin="5,0"/>
         </StackPanel>
     </Grid>
-</Window>
+</Window> 
