@@ -1,12 +1,21 @@
 ﻿<Window x:Class="Serial_monitor_pc.Plotter"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:Serial_monitor_pc"
-        mc:Ignorable="d"
-        Title="Plotter" Height="450" Width="800">
+        Title="De super plotter" Height="350" Width="525">
+    <Window.DataContext>
+        <local:PlotterPoints/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <oxy:PlotView Grid.Row="0" Model="{Binding MyModel}"/>
+        <StackPanel  Orientation="Horizontal" Grid.Row="1" Margin="10">
+            <CheckBox Content="Potentiometer" Margin="5,0"/>
+            <CheckBox Content="Batterij" Margin="5,0"/>
+        </StackPanel>
     </Grid>
-</Window>
+</Window> 

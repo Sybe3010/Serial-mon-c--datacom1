@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Serial_monitor_pc"
         xmlns:Collections="clr-namespace:System.Collections;assembly=System.Runtime" x:Class="Serial_monitor_pc.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Super slimme seriele monitor" Height="450" Width="800">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,6 +26,7 @@
             <Button x:Name="connectButton" Content="Connect" Width="75" Margin="5,0" Click="ConnectButton_Click"/>
             <Button x:Name="disconnectButton" Content="Disconnect" Width="75" Margin="5,0" Click="DisconnectButton_Click" IsEnabled="False"/>
             <Button x:Name="plotterButton" Content="Plotter" Width="75" Margin="5,0" Click="plotterButton_Click" IsEnabled="False" />
+            <Button x:Name="TFT_display" Content="TFT" Width="75" Margin="5,0" Click="TFT_display_Click"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -33,7 +35,10 @@
             </Grid.ColumnDefinitions>
 
             <TextBox x:Name="dataTextBox" Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" IsReadOnly="True"/>
-            <TextBox x:Name="logTextBox" Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" IsReadOnly="True"/>
+
+
+            <ProgressBar x:Name="potProgress" Height="20" Margin="5" Grid.Column="1"/>
+
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10">
             <ComboBox x:Name="typeData" Margin="5, 0" Width="100">
